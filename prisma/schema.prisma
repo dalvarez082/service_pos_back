@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model client {
+  cc_client    String    @id @db.VarChar(12)
+  cc_user      String    @db.VarChar(12)
+  nombre       String?   @db.VarChar(20)
+  apellido     String?   @db.VarChar(20)
+  fecha        DateTime? @db.Date
+  alias_client String?   @db.VarChar(12)
+  barrio       String?   @db.VarChar(30)
+  direccion    String?   @db.VarChar(30)
+  saldo        Float?
+  telefono     String    @db.VarChar(20)
+  pos_user     pos_user  @relation(fields: [cc_user], references: [cc_user], onDelete: NoAction, onUpdate: NoAction)
+  sale         sale[]
+}
+
+model pos_user {
+  cc_user        String     @id @db.VarChar(12)
+  id_type        Int        @default(autoincrement())
+  id_employee    String?    @db.VarChar(12)
+  nombre         String?    @db.VarChar(20)
+  apellido       String?    @db.VarChar(20)
+  imagen         String?    @db.VarChar(1000)
+  telefono       String     @db.VarChar(20)
+  password_user  String     @db.VarChar(20)
+  client         client[]
+  pos_user       pos_user?  @relation("pos_userTopos_user", fields: [id_employee], references: [cc_user], onDelete: NoAction, onUpdate: NoAction)
+  other_pos_user pos_user[] @relation("pos_userTopos_user")
+  type_user      type_user  @relation(fields: [id_type], references: [id_type], onUpdate: NoAction)
+  product        product[]
+}
+
+model product {
+  id_product   String         @id @db.VarChar(12)
+  id_type      Int            @default(autoincrement())
+  cc_user      String         @db.VarChar(12)
+  nombre       String?        @db.VarChar(20)
+  precio       Float?
+  imagen       String?        @db.VarChar(1000)
+  descripcion  String?        @db.VarChar(200)
+  pos_user     pos_user       @relation(fields: [cc_user], references: [cc_user], onDelete: NoAction, onUpdate: NoAction)
+  type_product type_product   @relation(fields: [id_type], references: [id_type], onUpdate: NoAction)
+  product_sale product_sale[] @ignore
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model product_sale {
+  id_sale    String  @db.VarChar(12)
+  id_product String  @db.VarChar(12)
+  cantidad   Int?
+  prestamo   Int?
+  product    product @relation(fields: [id_product], references: [id_product], onUpdate: NoAction)
+  sale       sale    @relation(fields: [id_sale], references: [id_sale], onDelete: Cascade, onUpdate: NoAction)
+
+  @@ignore
+}
+
+model sale {
+  id_sale      String         @id @db.VarChar(12)
+  cc_client    String         @db.VarChar(12)
+  fecha        DateTime?      @db.Date
+  nota         String?        @db.VarChar(190)
+  estado       Boolean?
+  abono        Float?
+  product_sale product_sale[] @ignore
+  client       client         @relation(fields: [cc_client], references: [cc_client], onDelete: SetNull, onUpdate: NoAction)
+}
+
+model type_product {
+  id_type     Int       @id @default(autoincrement())
+  nombre      String?   @db.VarChar(20)
+  descripcion String?   @db.VarChar(200)
+  product     product[]
+}
+
+model type_user {
+  id_type     Int        @id @default(autoincrement())
+  nombre      String?    @db.VarChar(20)
+  descripcion String?    @db.VarChar(200)
+  pos_user    pos_user[]
+}
