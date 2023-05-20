@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient({ log: ["query"] });
 
@@ -48,3 +49,28 @@ export const login = async (
     res.status(500).send(error);
   }
 };
+
+
+export const validateToken = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+        //Bearer token
+     const token = req.headers.authorization?.split(" ")[1]
+     const decoded = jwt.verify(token || "", process.env.HASH || "");
+     console.log(decoded)
+     if (decoded){
+        next()
+     }
+     else{
+        res.status(403).send();
+     }
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  };
+  
