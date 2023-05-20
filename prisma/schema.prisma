@@ -30,7 +30,7 @@ model pos_user {
   apellido       String?    @db.VarChar(20)
   imagen         String?    @db.VarChar(1000)
   telefono       String     @db.VarChar(20)
-  password_user  String     @db.VarChar(20)
+  password_user  String     @db.VarChar(255)
   client         client[]
   pos_user       pos_user?  @relation("pos_userTopos_user", fields: [id_employee], references: [cc_user], onDelete: NoAction, onUpdate: NoAction)
   other_pos_user pos_user[] @relation("pos_userTopos_user")
