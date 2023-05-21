@@ -1,6 +1,7 @@
 import express, {Express,Request,Response} from "express"
-import { userRouter,clientRouter } from "./router"
+import { userRouter,clientRouter, typeProductRouter} from "./router"
 import cors from "cors"
+
 
 const app:Express = express()
 
@@ -11,6 +12,7 @@ app.use(express.json())
 
 app.use("/user", userRouter)
 app.use("/client", clientRouter)
+app.use("/typeProduct", typeProductRouter)
 
 app.listen(port, ()=>{
     console.log("server initialized")
