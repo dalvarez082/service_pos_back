@@ -1,5 +1,5 @@
 import express, {Express,Request,Response} from "express"
-import { userRouter,clientRouter, typeProductRouter} from "./router"
+import { userRouter,clientRouter, typeProductRouter,saleRouter,productRouter} from "./router"
 import cors from "cors"
 
 
@@ -12,6 +12,9 @@ app.use(express.json())
 
 app.use("/user", userRouter)
 app.use("/client", clientRouter)
+app.use("/product", productRouter)
+app.use("/sale", saleRouter)
+
 app.use("/typeProduct", typeProductRouter)
 
 app.listen(port, ()=>{
