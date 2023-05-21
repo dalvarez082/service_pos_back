@@ -5,4 +5,4 @@ import saleRouter from "./saleRouter"
 import typeProductRouter from "./typeProductRouter"
 
 export {userRouter}
-export {clientRouter}
+export { clientRouter, productRouter,saleRouter, typeProductRouter}

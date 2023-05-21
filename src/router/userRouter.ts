@@ -1,10 +1,10 @@
-import express, {Router} from "express"
-import { register, generateToken } from "../controller/userController"
-import { generateHash, login } from "../middleware"
+import express, { Router } from "express";
+import { register, generateToken } from "../controller/userController";
+import { generateHash, login } from "../middleware";
 
-const router:Router = express.Router()
+const router: Router = express.Router();
 
-router.post("/",generateHash, register)
-router.post("/login",login, generateToken)
+router.post("/", generateHash, register);
+router.post("/login", login, generateToken);
 
-export default router
+export default router;

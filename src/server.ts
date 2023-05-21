@@ -1,22 +1,26 @@
-import express, {Express,Request,Response} from "express"
-import { userRouter,clientRouter, typeProductRouter,saleRouter,productRouter} from "./router"
-import cors from "cors"
+import express, { Express, Request, Response } from "express";
+import {
+  userRouter,
+  clientRouter,
+  productRouter,
+  saleRouter,
+  typeProductRouter,
+} from "./router";
+import cors from "cors";
 
+const app: Express = express();
 
-const app:Express = express()
+const port: string = process.env.PORT || "3001";
 
-const port:string = process.env.PORT || "3001"
+app.use(cors());
+app.use(express.json());
 
-app.use(cors())
-app.use(express.json())
+app.use("/user", userRouter);
+app.use("/client", clientRouter);
+app.use("/product", productRouter);
+app.use("/sale", saleRouter);
+app.use("/typeProduct", typeProductRouter);
 
-app.use("/user", userRouter)
-app.use("/client", clientRouter)
-app.use("/product", productRouter)
-app.use("/sale", saleRouter)
-
-app.use("/typeProduct", typeProductRouter)
-
-app.listen(port, ()=>{
-    console.log("server initialized")
-})
+app.listen(port, () => {
+  console.log("server initialized");
+});
