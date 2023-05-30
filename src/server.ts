@@ -5,6 +5,7 @@ import {
   productRouter,
   saleRouter,
   typeProductRouter,
+  // productSaleRouter
 } from "./router";
 import cors from "cors";
 
@@ -20,6 +21,7 @@ app.use("/client", clientRouter);
 app.use("/product", productRouter);
 app.use("/sale", saleRouter);
 app.use("/typeProduct", typeProductRouter);
+// app.use("/productSale", productSaleRouter);
 
 app.listen(port, () => {
   console.log("server initialized");

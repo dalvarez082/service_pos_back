@@ -16,9 +16,10 @@ export const create = async (req: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const idAsNumber = parseInt(id,10);
     const item = await prisma.sale.update({
       where: {
-        id_sale: id,
+        id_sale: idAsNumber,
       },
       data: req.body,
     });
@@ -32,9 +33,10 @@ export const update = async (req: Request, res: Response) => {
 export const deleteOne = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const idAsNumber = parseInt(id,10);
     const item = await prisma.sale.delete({
       where: {
-        id_sale: id,
+        id_sale: idAsNumber,
       },
     });
     res.status(200).json(item);
@@ -61,9 +63,10 @@ export const getAll = async (req: Request, res: Response) => {
 export const getOne = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const idAsNumber = parseInt(id,10);
     const item = await prisma.sale.findUnique({
       where: {
-        id_sale: id,
+        id_sale: idAsNumber,
       },
     });
     res.status(200).json(item);

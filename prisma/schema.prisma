@@ -39,7 +39,7 @@ model pos_user {
 }
 
 model product {
-  id_product   String         @id @db.VarChar(12)
+  id_product   Int            @id @default(autoincrement())
   id_type      Int            @default(autoincrement())
   cc_user      String         @db.VarChar(12)
   nombre       String?        @db.VarChar(20)
@@ -54,8 +54,8 @@ model product {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product_sale {
-  id_sale    String  @db.VarChar(12)
-  id_product String  @db.VarChar(12)
+  id_sale    Int  @default(autoincrement())
+  id_product Int  @default(autoincrement())
   cantidad   Int?
   prestamo   Int?
   product    product @relation(fields: [id_product], references: [id_product], onUpdate: NoAction)
@@ -65,7 +65,7 @@ model product_sale {
 }
 
 model sale {
-  id_sale      String         @id @db.VarChar(12)
+  id_sale      Int         @id @default(autoincrement())
   cc_client    String         @db.VarChar(12)
   fecha        DateTime?      @db.Date
   nota         String?        @db.VarChar(190)
