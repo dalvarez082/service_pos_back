@@ -4,14 +4,24 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({ log: ["query"] });
 
 export const create = async (req: Request, res: Response) => {
+  
   try {
-    const item = await prisma.sale.create({ data: req.body });
+    const item = await prisma.sale.create({ data: req.body.sale });
+    console.log(req.body)
+    console.log(item)
+
+    // for (let i = 0; i < req.body.products.length; i++) {
+    //   await prisma.product_sale
+    // }
+
     res.status(201).json(item);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
 };
+
+
 
 export const update = async (req: Request, res: Response) => {
   try {

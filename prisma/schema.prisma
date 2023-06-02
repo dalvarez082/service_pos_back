@@ -54,6 +54,7 @@ model product {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product_sale {
+  id_product_sale Int  @id @default(autoincrement())
   id_sale    Int  @default(autoincrement())
   id_product Int  @default(autoincrement())
   cantidad   Int?
@@ -61,7 +62,7 @@ model product_sale {
   product    product @relation(fields: [id_product], references: [id_product], onUpdate: NoAction)
   sale       sale    @relation(fields: [id_sale], references: [id_sale], onDelete: Cascade, onUpdate: NoAction)
 
-  @@ignore
+  
 }
 
 model sale {
